@@ -42,19 +42,28 @@ let one = ["привет", true, 65];
 let two = [3, [], false];
 let three = ["js", "java", "script", "redButton"];
 
-let toHardThreeOrder = [].concat(one, two, three);
+function resultFilter(arr1, arr2, arr3) {
+  let toHardThreeOrder = [].concat(one, two, three);
 
-let a = toHardThreeOrder.filter((n) => {
-  return typeof n == "string";
-});
+  let a = toHardThreeOrder.filter((n) => {
+    return typeof n == "string";
+  });
 
-let b = toHardThreeOrder.filter((n) => {
-  return typeof n == "number";
-});
+  let b = toHardThreeOrder.filter((n) => {
+    return typeof n == "number";
+  });
 
-let c = toHardThreeOrder.filter((n) => {
-  return typeof n == "boolean";
-});
+  let c = toHardThreeOrder.filter((n) => {
+    return typeof n == "boolean";
+  });
 
-let result = [a, b, c];
-console.log(result.flat());
+  let d = toHardThreeOrder.filter((n) => {
+    return (
+      typeof n !== "boolean" && typeof n !== "number" && typeof n !== "string"
+    );
+  });
+
+  return [...a, ...b, ...c, ...d];
+}
+
+console.log(resultFilter(one, two, three));
