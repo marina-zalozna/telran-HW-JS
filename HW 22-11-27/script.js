@@ -34,7 +34,7 @@ function rerender() {
     const divRef = document.createElement("div");
     let totalPrice = document.createElement("p");
     const totalAmount = document.createElement("p");
-    totalPrice.innerText = `Общая стоимость: ${data.reduce((a, b) => Number(a)+ Number(b.price), 0)}`;
+    totalPrice.innerText = `Общая стоимость: ${data.reduce((a, b) => Number(a)+ Number(b.price * b.amount), 0)}`;
     totalAmount.innerText = `Общее количество: ${data.reduce((a, b) => Number(a) + Number(b.amount), 0)}`;
     divRef.append(totalPrice, totalAmount);
     totalSum.append(divRef);
