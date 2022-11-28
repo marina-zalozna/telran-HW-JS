@@ -29,18 +29,15 @@ function rerender() {
     amount_p.innerText = `${price} x ${amount} = ${price * amount}`;
 
     container.append(title_p, price_p, amount_p);
-    products.append(container);
+    products.append(container);   
 
     const divRef = document.createElement("div");
-    const totalPrice = document.createElement("p");
+    let totalPrice = document.createElement("p");
     const totalAmount = document.createElement("p");
-
-      
-    totalPrice += price_p;
-    totalAmount +=amount_p;
-
+    totalPrice.innerText = data.reduce((a, b) => a + b.price_p, 0);
+    totalAmount.innerText = data.reduce((a, b) => a + b.amount_p, 0);
     divRef.append(totalPrice, totalAmount);
-
+    totalSum.append(divRef);
   });
 }
 
