@@ -3,15 +3,7 @@ const products = document.querySelector(".products");
 const totalSum = document.querySelector(".totalSum");
 
 
-function write_local(data){
-  localStorage.setItem('products', JSON.stringify(data));
-}
-
-// function read_local(){
-//   return JSON.parse(localStorage.getItem('products')) ?? [];
-// }
-
-let data = [];
+let data =  JSON.parse(localStorage.getItem('products')) || [];
 
 add_form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -19,8 +11,7 @@ add_form.addEventListener("submit", (event) => {
   const price = +event.target.price.value;
   const amount = +event.target.amount.value;
   data.push({ title, price, amount });
-
-  write_local(data);
+  localStorage.setItem('products', JSON.stringify(data));
   event.target.title.value = "";
   event.target.price.value = "";
   event.target.amount.value = "";
