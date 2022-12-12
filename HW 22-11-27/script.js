@@ -2,17 +2,28 @@ const add_form = document.querySelector(".add_form");
 const products = document.querySelector(".products");
 const totalSum = document.querySelector(".totalSum");
 
-const data = [];
+
+function write_local(data){
+  localStorage.setItem('products', JSON.stringify(data));
+}
+
+function read_local(){
+  return JSON.parse(localStorage.getItem('products')) ?? [];
+}
+
+let data = read_local();
 
 add_form.addEventListener("submit", (event) => {
   event.preventDefault();
-  const title = add_form.title.value;
-  const price = add_form.price.value;
-  const amount = add_form.amount.value;
+  const title = event.target.title.value;
+  const price = +event.target.price.value;
+  const amount = +event.target.amount.value;
   data.push({ title, price, amount });
-  add_form.title.value = "";
-  add_form.price.value = "";
-  add_form.amount.value = "";
+
+  write_local(data);
+  event.target.title.value = "";
+  event.target.price.value = "";
+  event.target.amount.value = "";
   rerender();
 });
 
@@ -30,14 +41,16 @@ function rerender() {
 
     container.append(title_p, price_p, amount_p);
     products.append(container);   
-
+   
+    totalSum.innerText = "";
     const divRef = document.createElement("div");
-    let totalPrice = document.createElement("p");
+    const totalPrice = document.createElement("p");
     const totalAmount = document.createElement("p");
-    totalPrice.innerText = `Общая стоимость: ${data.reduce((a, b) => Number(a)+ Number(b.price * b.amount), 0)}`;
-    totalAmount.innerText = `Общее количество: ${data.reduce((a, b) => Number(a) + Number(b.amount), 0)}`;
+    totalPrice.innerText = `Общая стоимость: ${data.reduce((a, b) => a+ b.price * b.amount, 0)}`;
+    totalAmount.innerText = `Общее количество: ${data.reduce((a, b) => a + b.amount, 0)}`;
     divRef.append(totalPrice, totalAmount);
     totalSum.append(divRef);
   });
 }
 
+rerender();
